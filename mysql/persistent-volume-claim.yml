@@ -6,8 +6,9 @@ metadata:
   namespace: mysql-server
 
 spec:
-  accessNodes: ReadWriteOnce
-  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
+  storageClassName: standard

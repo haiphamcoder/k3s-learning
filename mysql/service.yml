@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 
 metadata:
-  name: mysql
+  name: mysql-service
   namespace: mysql-server
 
 spec:
   selector:
-    app: mysql
+    app: mysql-service
   type: LoadBalancer
   ports:
     - name: mysql-port

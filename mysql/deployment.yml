@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: mysql-deployment
+  namespace: mysql-server
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-deployment
+  template:
+    metadata:
+      labels:
+        app: mysql-deployment
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "admin"
+          volumeMounts:
+            - name: mysql-config-volume
+              mountPath: /etc/mysql/mysql.conf.d/mysqld-custom.cnf
+              subPath: mysqld-custom.cnf
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-config-volume
+          configMap:
+            name: mysql-config
+            items:
+              - key: mysqld-custom.cnf
+                path: mysqld-custom.cnf
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
