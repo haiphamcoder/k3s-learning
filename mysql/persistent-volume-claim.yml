@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: mysql-pvc
+  namespace: mysql-server
+
+spec:
+  accessNodes: ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 10Gi
