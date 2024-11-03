@@ -15,6 +15,7 @@ spec:
       labels:
         app: mysql-deployment
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: mysql-container
           image: mysql:8.0
@@ -23,6 +24,15 @@ spec:
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "admin"
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "1000m"
+              ephemeral-storage: "10Gi"
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+              ephemeral-storage: "10Gi"
           volumeMounts:
             - name: mysql-config-volume
               mountPath: /etc/mysql/mysql.conf.d/mysqld-custom.cnf
